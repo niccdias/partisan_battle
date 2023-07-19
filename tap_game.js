@@ -259,3 +259,5 @@ bottomPlayer.addEventListener("click", (event) => {
 
 set_dynamic_increment();
 new_game();
+
+window.parent.postMessage("Message sent from game", "*");
