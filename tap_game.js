@@ -235,9 +235,9 @@ window.addEventListener('message', function(event) {
     let pid2 = event.data;
 
     if (pid2 == "Republican") {
-        update_colors(democrat == false)
+        update_colors(democrat = false)
     } else {
-        update_colors(democrat == true)
+        update_colors(democrat = true)
     }
 });
 
