@@ -1,0 +1,163 @@
+body {
+    font-family: monospace;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.playerBottom {
+    height: 100vh;
+    background-color: red;
+}
+
+.playerTop {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    background-color: skyblue;
+}
+
+/* listening layers */
+.layers {
+    opacity: 1;
+    /* background-color: black; */
+    width: 100%;
+    z-index: 100;
+    position: absolute;
+    height: 100vh;
+}
+
+.playerBottomLayer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 4px white dashed;
+    height: 50%;
+}
+
+.playerTopLayer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+}
+
+.textlg {
+    width: 100%;
+    text-align: center;
+    font-size: 8em;
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: black;
+}
+
+.strokeText {
+    color: black;
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+.menu-container {
+    /* visibility: hidden; */
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 1000;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.5em solid black;
+    border-right: 0;
+    border-left: 0;
+    width: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding-bottom: 2rem;
+}
+
+.menu h1 {
+    font-size: 3rem;
+    margin: 0.6em 0 0.2em 0;
+}
+
+.menu-controls button {
+    padding: 0.5em;
+    margin: 3em 0.5em 0 0.5em;
+    font-weight: 600;
+    font-size: 0.8em;
+    background-color: white;
+    border: 2px black solid;
+    box-shadow: 4px 4px black;
+}
+
+.menu-controls button:hover {
+    box-shadow: 2px 2px black;
+}
+
+.top50 {
+    top: 50%;
+}
+
+.bottom50 {
+    bottom: 50%;
+    color: black;
+}
+
+.timer-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    z-index: 100;
+    margin: auto;
+}
+
+.timer {
+    text-align: center;
+    background-color: black;
+    padding: 0 8px 0 8px;
+
+}
+
+.timer span {
+    color: white;
+    font-size: 2em;
+}
+
+#heading {
+    text-align: center;
+}
+
+#subHeading {
+    text-align: center;
+    padding: 0 6px 0 6px;
+}
+
+.midLine {
+    margin: 0;
+    z-index: 102;
+    border-top: 4px white dashed;
+    position: absolute;
+    width: 100%;
+    top: 50vh;
+    box-sizing: border-box;
+}

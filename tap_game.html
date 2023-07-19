@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pressing Partisans</title>
+    <link rel="stylesheet" href="tap_game.css">
+  </head>
+  <body>
+
+    <!-- TIMERS -->
+    <div class="timer-container top50">
+      <div class="timer ">
+        <span id="timer">Hello, Dev!</span>
+      </div>
+    </div>
+    <div class="timer-container bottom50 rotate180">
+      <div class="timer ">
+        <span id="timer">How are you?</span>
+      </div>
+    </div>
+    
+    <!-- MENU -->
+    <div class="menu-container">
+      <div class="menu">
+        <h1 id="heading" class="">Pressing Partisans</h2>
+          <span id="subHeading">Tap faster to win! </span>
+          <div class="menu-controls">
+            <button onclick="startGame(timer = true)">Ready? </button>
+          </div>
+        </div>
+    </div>
+
+    <!-- SCREEN ELEMENTS -->
+    <hr class="midLine">
+
+    <div class="layers">
+      <div class="playerTopLayer">
+        <span class="textlg" id="topPlayerScore">0</span>
+      </div>
+      <div class="playerBottomLayer">
+        <span class="textlg" id="bottomPlayerScore">0</span>
+      </div>
+    </div>
+    <div class="playerTop"></div>
+    <div class="playerBottom"></div>
+  </body>
+    
+<script src="tap_game.js"></script>
+</html>
