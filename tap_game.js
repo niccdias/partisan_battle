@@ -233,8 +233,13 @@ const check_winner = (timesup = false) => {
 // Listen for PID
 window.addEventListener('message', function(event) {
     let pid2 = event.data;
-    console.log("Message received from the parent: " + event.data);
-  });
+
+    if (pid2 == "Republican") {
+        update_colors(democrat == false)
+    } else {
+        update_colors(democrat == true)
+    }
+});
 
 // Start game
 bottomPlayer.addEventListener("click", (event) => {
