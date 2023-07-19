@@ -73,6 +73,12 @@ const toggle_layer_visibility = (visible = true) => {
     return layerContainer.style.visibility =  visible ?  "visible" : "hidden";
 }
 
+// Update colors
+const update_colors = (democrat = true) => {
+    return topPlayer.style.backgroundColor =  democrat ?  "red" : "skyblue";
+    return bottomPlayer.style.backgroundColor =  democrat ?  "skyblue" : "red";
+}
+
 // Timers
 const set_timer_span = (value) => {
     const timerSpans = document.querySelectorAll("#timer");
@@ -223,6 +229,12 @@ const check_winner = (timesup = false) => {
         return 0;
     }
 };
+
+// Listen for PID
+window.addEventListener('message', function(event) {
+    let pid2 = event.data;
+    console.log("Message received from the parent: " + event.data);
+  });
 
 // Start game
 bottomPlayer.addEventListener("click", (event) => {
