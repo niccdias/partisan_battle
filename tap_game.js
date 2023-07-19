@@ -74,8 +74,11 @@ const toggle_layer_visibility = (visible = true) => {
 }
 
 // Update colors
-const update_colors = (democrat = true) => {
+const update_top_color = (democrat = true) => {
     return topPlayer.style.backgroundColor =  democrat ?  "red" : "skyblue";
+}
+
+const update_bottom_color = (democrat = true) => {
     return bottomPlayer.style.backgroundColor =  democrat ?  "skyblue" : "red";
 }
 
@@ -234,10 +237,11 @@ const check_winner = (timesup = false) => {
 window.addEventListener('message', function(event) {
     let pid2 = event.data;
 
-    if (pid2 == "Republican") {
-        update_colors(democrat = false)
-    } else {
-        update_colors(democrat = true)
+    console.log("Message received")
+
+    if (pid2 == "Democrat") {
+        update_top_color(democrat = true)
+        update_bottom_color(democrat = true)
     }
 });
 
