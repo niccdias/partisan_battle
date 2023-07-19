@@ -45,7 +45,7 @@ const game_menu = (visible = true) => {
     // Display outcome
     if (top_player_clicks > bottom_player_counts) {
         set_menu_heading("Blue Won!", "skyblue")
-        set_menu_subheading(`Blue tapped the screen ${top_player_clicks} times.`)
+        set_menu_subheading(`You tapped the screen ${bottom_player_counts} times.`)
     } else {
         set_menu_heading("Red Won!", "red")
         set_menu_subheading(`Red tapped the screen ${bottom_player_counts} times.`)
