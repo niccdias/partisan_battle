@@ -234,7 +234,7 @@ const check_winner = (timesup = false) => {
 };
 
 // Listen for PID
-window.addEventListener('message', function(event) {
+window.addEventListener("message", (event) {
     let pid2 = event.data;
 
     console.log("Message received")
