@@ -257,7 +257,19 @@ bottomPlayer.addEventListener("click", (event) => {
     }
 });
 
+// Adjust game to screen size
 set_dynamic_increment();
-new_game();
 
-window.parent.postMessage("Message sent from game", "*");
+// Grab player's PID
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+
+// Update game appearance
+if (params.par_pid == "Democrat") {
+        update_top_color(democrat = true)
+        update_bottom_color(democrat = true)
+    }
+
+// Start game
+new_game();
