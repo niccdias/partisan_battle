@@ -3,8 +3,8 @@ const screen_height = document.body.scrollHeight;
 const screen_width = document.body.scrollWidth;
 
 // Define sigmoid function
-function sigmoid(z, k = 2) {
-  return 1 / (1 + Math.exp(-z/k));
+function sigmoid(input, shape = 2) {
+  return 1 / (1 + Math.exp(-input / shape));
 }
 
 // Set variables
@@ -21,6 +21,8 @@ let beginGame = false;
 let timesUp = false;
 let countDownInterval;
 let reaction_interval;
+let margin;
+let shallowness;
 
 let topPlayerScore;
 let bottomPlayerScore;
@@ -121,7 +123,10 @@ const startGame = (countDowntimer = true, matchTime = 15) => {
 
     reaction_interval = setInterval(() => {
         if (beginGame) {
-            s = sigmoid(bottom_player_counts - top_player_clicks + 3, k = 2);
+            s = sigmoid(
+                bottom_player_counts - top_player_clicks + margin,
+                shallowness
+            );
 
             if (Math.random() < s) {
                 top_player_clicks++;
@@ -260,16 +265,20 @@ bottomPlayer.addEventListener("click", (event) => {
 // Adjust game to screen size
 set_dynamic_increment();
 
-// Grab player's PID
+// Grab query strings
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
 
-// Update game appearance
-if (params.par_pid == "Democrat") {
+// Update game colors
+if (params.player_pid == "Democrat") {
         update_top_color(democrat = true)
         update_bottom_color(democrat = true)
     }
+
+// Update difficulty
+margin = params.margin;
+shallowness = params.shallowness;
 
 // Start game
 new_game();
