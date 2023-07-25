@@ -11,12 +11,12 @@ body {
     user-select: none;
 }
 
-.playerBottom {
+.bottomPlayer {
     height: 100vh;
     background-color: red;
 }
 
-.playerTop {
+.topPlayer {
     position: absolute;
     height: 50%;
     width: 100%;
@@ -33,7 +33,7 @@ body {
     height: 100vh;
 }
 
-.playerBottomLayer {
+.bottomPlayerLayer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,7 +41,7 @@ body {
     height: 50%;
 }
 
-.playerTopLayer {
+.topPlayerLayer {
     display: flex;
     align-items: center;
     justify-content: center;

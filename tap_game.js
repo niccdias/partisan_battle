@@ -3,60 +3,47 @@ const screen_height = document.body.scrollHeight;
 const screen_width = document.body.scrollWidth;
 
 // Define sigmoid function
-function sigmoid(input, shape = 2) {
+function sigmoid(input = 0, shape = 2) {
   return 1 / (1 + Math.exp(-input / shape));
 }
 
 // Set variables
-const new_wins = {
-    top_player: 0,
-    bottom_player: 0,
-    increment: 5 // Starting value
-};
+let click_increment = screen_height * 0.03;
+let game_began = false;
+let countdown_interval;
 
-var s;
-
-let increment;
-let beginGame = false;
-let timesUp = false;
-let countDownInterval;
 let reaction_interval;
-let margin;
-let shallowness;
+let margin = 0;
+let shallowness = 2;
+var tap_prob;
 
-let topPlayerScore;
-let bottomPlayerScore;
-
+let top_player_score;
+let bottom_player_score;
 let top_player_clicks = 0;
-let bottom_player_counts = 0;
+let bottom_player_clicks = 0;
 
-let topPlayer = document.querySelector(".playerTop");
-let bottomPlayer = document.querySelector(".playerBottom");
-
-let topPlayerLayer = document.querySelector(".playerTopLayer");
-let bottomPlayerLayer = document.querySelector(".playerBottomLayer");
-
-let layerContainer = document.querySelector(".layers");
+let top_player_pid = "Democrat";
+let top_player_color = "skyblue";
+let bottom_player_color = "red";
+let top_player = document.querySelector(".topPlayer");
+let bottom_player = document.querySelector(".bottomPlayer");
+let layer_container = document.querySelector(".layers");
 
 // Set-up game mechanisms
 /// Menu
 const game_menu = (visible = true) => {
-    // Select menu container
-    const menu = document.querySelector(".menu-container");
-
     // Display outcome
-    if (top_player_clicks > bottom_player_counts) {
-        set_menu_heading("Blue Won!", "skyblue")
-        set_menu_subheading(`You tapped the screen ${bottom_player_counts} times.`)
+    if (get_top_margin() >= get_bottom_margin()) {
+        set_menu_heading(`${top_player_pid}s Won!`, top_player_color)
     } else {
-        set_menu_heading("Red Won!", "red")
-        set_menu_subheading(`Red tapped the screen ${bottom_player_counts} times.`)
+        set_menu_heading(`${params.player_pid}s Won!`, bottom_player_color)
     }
-    
-    // NOT SURE WHAT THIS DOES
-    if(visible)
-    return menu.style.visibility = 'visible';
-    return menu.style.visibility = 'hidden';
+
+    set_menu_subheading(`You tapped the screen ${bottom_player_clicks} times.`)
+
+    // Toggle menu's visibility
+    const menu = document.querySelector(".menu-container");
+    return menu.style.visibility =  visible ?  "visible" : "hidden";
 }
 
 const set_menu_heading = (text = "New Game" , color = "black") => {
@@ -70,215 +57,159 @@ const set_menu_subheading = (text = "New Game" ) => {
     return heading.innerHTML = text;
 }
 
-// Toggle layer visibility
+/// Toggling layer visibility
 const toggle_layer_visibility = (visible = true) => {
-    return layerContainer.style.visibility =  visible ?  "visible" : "hidden";
+    return layer_container.style.visibility =  visible ?  "visible" : "hidden";
 }
 
-// Update colors
-const update_top_color = (democrat = true) => {
-    return topPlayer.style.backgroundColor =  democrat ?  "red" : "skyblue";
-}
+/// Setting timer spans
+const set_timer_spans = (value) => {
+    const timer_spans = document.querySelectorAll("#timer");
 
-const update_bottom_color = (democrat = true) => {
-    return bottomPlayer.style.backgroundColor =  democrat ?  "skyblue" : "red";
-}
-
-// Timers
-const set_timer_span = (value) => {
-    const timerSpans = document.querySelectorAll("#timer");
-
-    timerSpans.forEach(element => {
+    timer_spans.forEach(element => {
         element.innerHTML = value;
     });
 }
 
-const startGame = (countDowntimer = true, matchTime = 15) => {
+/// Starting the game
+const start_game = () => {
 
+    // Hide layers
     toggle_layer_visibility(visible = false);
-    set_timer_span("3");
-    game_menu(visibility = false);
 
-    let count = 3;
-    countDownInterval = setInterval(() => {
+    // Set preliminary countdown
+    set_timer_spans("3");
+    let time_left = 3;
+
+    // Hide game menu
+    game_menu(visible = false);
+
+    // Initiate countdown
+    countdown_interval = setInterval(() => {
         
-        if(--count == 0){
-            if(!beginGame) {
-                set_timer_span("Tap 👆");
-                beginGame = true;
-                count = matchTime;
+        if(--time_left == 0){
+            if(!game_began) {
+                set_timer_spans("Tap 👆");
+                game_began = true;
+                time_left = 15;
             }
             else {
-                set_timer_span(0);
-                timesUp = true;
-                check_winner(timesup = true);
-                clearInterval(countDownInterval); 
+                set_timer_spans(0);
+                check_for_winner(times_up = true);
             }
         }
         else {
-            set_timer_span(count);
+            set_timer_spans(time_left);
         }
 
     }, 1000)
 
+    // Awaken the computer
     reaction_interval = setInterval(() => {
-        if (beginGame) {
-            s = sigmoid(
-                bottom_player_counts - top_player_clicks + margin,
+        if (game_began) {
+            tap_prob = sigmoid(
+                bottom_player_clicks - top_player_clicks + margin,
                 shallowness
             );
 
-            if (Math.random() < s) {
+            if (Math.random() < tap_prob) {
                 top_player_clicks++;
-                setTopPlayerScore(increment);
-                check_winner();
+                set_top_player_score(click_increment);
+                check_for_winner();
             }
 
-            if (count == 0) {
+            if (time_left == 0) {
                 clearInterval(reaction_interval); 
             }
         }
     }, 100)
 }
 
-// More stuff
-const set_dynamic_increment = (percentage_of_height = 0.03) => {
-    new_wins.increment =  screen_height * percentage_of_height;
-}
+/// Ending the game
+const end_game = (player_outcome = "W") => {
+    // Terminate countdown
+    clearInterval(countdown_interval);
 
-const get_wins = () => {
-    if (sessionStorage.getItem("wins")) {
-        const wins = JSON.parse(sessionStorage.getItem("wins"));
-        return wins;
-    }
+    // Update button
+    const button = document.getElementById("button");
+    button.innerHTML = "Next Game";
+    button.onclick = window.parent.postMessage(player_outcome, "*");
+    console.log(player_outcome);
 
-    return 0;
-};
+    // Make game menu visible
+    game_menu(visible = true);
+    toggle_layer_visibility(visible = true);
 
-const reset_clicks = () => {
-    top_player_clicks = 0;
-    bottom_player_counts = 0;
-    return (topPlayer.style.height = "50%");
-};
-
-const new_game = () => {
-    if (get_wins()) {
-        let wins = get_wins();
-        topPlayerScore = wins["top_player"];
-        bottomPlayerScore = wins["bottom_player"];
-        increment = wins["increment"];
-
-        return update_wins_UI(topPlayerScore, bottomPlayerScore)
-    } else {
-        sessionStorage.setItem("wins", JSON.stringify(new_wins));
-        
-        return increment = new_wins.increment;
-    }
-};
-
-const update_wins = (topWinner) => {
-    let wins = get_wins();
-
-    if (wins) {
-        clearInterval(countDownInterval);
-        
-        if (topWinner) wins["top_player"] += 1;
-        else wins["bottom_player"] += 1;
-
-        update_wins_UI(topPlayerScore = wins['top_player'], bottomPlayerScore = wins['bottom_player']);
-
-        game_menu(visible = true);
-        toggle_layer_visibility(visible = true);
-
-        sessionStorage.setItem("wins", JSON.stringify(wins));
-        return reset_clicks();
-    }
+    // Reset margins
+    top_player.style.height = "50%"
 
     return 0;
-};
-
-const update_wins_UI = (topPlayerScore, bottomPlayerScore) => {
-    document.querySelector("#topPlayerScore").innerHTML = topPlayerScore
-    document.querySelector("#bottomPlayerScore").innerHTML = bottomPlayerScore
 }
 
+/// Updating scores
 const get_top_margin = () => {
-    return parseFloat(window.getComputedStyle(topPlayer).height.match(/\d+/));
+    return parseFloat(window.getComputedStyle(top_player).height.match(/\d+/));
 };
 
 const get_bottom_margin = () => {
     return parseFloat(screen_height - get_top_margin());
 };
 
-const setTopPlayerScore = (increment) => {
-    topPlayer.style.height =
-    get_top_margin() + increment > 0
-        ? `${get_top_margin() + increment}px`
+const set_top_player_score = (click_increment) => {
+    top_player.style.height =
+    get_top_margin() + click_increment > 0
+        ? `${get_top_margin() + click_increment}px`
         : "0px";
 };
 
-const check_winner = (timesup = false) => {
-
+const check_for_winner = (times_up = false) => {
     // If top player has won
-    if (get_top_margin() >= screen_height || (timesup && (get_top_margin() >= get_bottom_margin()) )) {
-        update_wins((topWinner = true));
-
-        beginGame = false;
-        timesUp = false;
-        return 0;
+    if (get_top_margin() >= screen_height || (times_up && (get_top_margin() >= get_bottom_margin()) )) {
+        end_game(player_outcome = "L");
     }
     
     // If bottom player has won
-    if (((get_top_margin() == 0 && (top_player_clicks || bottom_player_counts))) || (timesup && (get_top_margin() <= get_bottom_margin()) )) {
-        update_wins((topWinner = false));
-
-        beginGame = false;
-        timesUp = false;
-        return 0;
+    if (((get_top_margin() == 0 && (top_player_clicks || bottom_player_counts))) || (times_up && (get_top_margin() < get_bottom_margin()) )) {
+        end_game(player_outcome = "W");
     }
+
+    return 0;
 };
 
-// Listen for PID
-window.addEventListener("message", (event) => {
-    let pid2 = event.data;
-
-    console.log("Message received")
-
-    if (pid2 == "Democrat") {
-        update_top_color(democrat = true)
-        update_bottom_color(democrat = true)
-    }
-});
-
-// Start game
-bottomPlayer.addEventListener("click", (event) => {
+// Start listening for clicks
+bottom_player.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (beginGame) {
-        bottom_player_counts++;
-        setTopPlayerScore(-increment);
-        check_winner();
+    if (game_began) {
+        bottom_player_clicks++;
+        set_top_player_score(-click_increment);
+        check_for_winner();
     }
 });
-
-// Adjust game to screen size
-set_dynamic_increment();
 
 // Grab query strings
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
 
-// Update game colors
+// Update game appearence
 if (params.player_pid == "Democrat") {
-        update_top_color(democrat = true)
-        update_bottom_color(democrat = true)
-    }
+    // Update color variables
+    top_player_color = "red";
+    bottom_player_color = "skyblue";
+    top_player.style.backgroundColor = top_player_color;
+    bottom_player.style.backgroundColor = bottom_player_color;
+
+    // Update top player's PID
+    top_player_pid = "Republican";
+}
 
 // Update difficulty
-margin = params.margin;
-shallowness = params.shallowness;
+if(params.margin) {
+    margin = params.margin;
+}
 
-// Start game
-new_game();
+if(params.shallowness) {
+    shallowness = params.shallowness;
+}

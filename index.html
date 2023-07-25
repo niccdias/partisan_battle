@@ -27,7 +27,7 @@
         <h1 id="heading" class="">Pressing Partisans</h2>
           <span id="subHeading">Tap faster to win! </span>
           <div class="menu-controls">
-            <button onclick="startGame(timer = true)">Ready? </button>
+            <button id="button" onclick="start_game()">Ready? </button>
           </div>
         </div>
     </div>
@@ -36,15 +36,15 @@
     <hr class="midLine">
 
     <div class="layers">
-      <div class="playerTopLayer">
+      <div class="topPlayerLayer">
         <span class="textlg" id="topPlayerScore">0</span>
       </div>
-      <div class="playerBottomLayer">
+      <div class="bottomPlayerLayer">
         <span class="textlg" id="bottomPlayerScore">0</span>
       </div>
     </div>
-    <div class="playerTop"></div>
-    <div class="playerBottom"></div>
+    <div class="topPlayer"></div>
+    <div class="bottomPlayer"></div>
   </body>
   
   <script src="tap_game.js"></script>
