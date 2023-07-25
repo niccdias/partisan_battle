@@ -219,7 +219,7 @@ if (params.player_pid == "Democrat") {
 
 // Update difficulty
 if(params.margin) {
-    margin = params.margin;
+    margin =  parseInt(params.margin);
 }
 
 if(params.shallowness) {
