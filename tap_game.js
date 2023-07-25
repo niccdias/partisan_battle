@@ -11,6 +11,7 @@ function sigmoid(input = 0, shape = 2) {
 let click_increment = screen_height * 0.03;
 let game_began = false;
 let countdown_interval;
+let player_outcome = "W";
 
 let reaction_interval;
 let margin = 0;
@@ -126,15 +127,13 @@ const start_game = () => {
 }
 
 /// Ending the game
-const end_game = (player_outcome = "W") => {
+const end_game = () => {
     // Terminate countdown
     clearInterval(countdown_interval);
 
     // Update button
     const button = document.getElementById("button");
     button.innerHTML = "Next Game";
-    button.onclick = function() {window.parent.postMessage(player_outcome, "*");}
-    console.log(player_outcome);
 
     // Make game menu visible
     game_menu(visible = true);
@@ -142,6 +141,17 @@ const end_game = (player_outcome = "W") => {
 
     // Reset margins
     top_player.style.height = "50%"
+
+    return 0;
+}
+
+/// Button
+const button_pressed = () => {
+    if(!game_began) {
+        start_game()
+    } else{
+        window.parent.postMessage(player_outcome, '*');
+    }
 
     return 0;
 }
@@ -165,12 +175,14 @@ const set_top_player_score = (click_increment) => {
 const check_for_winner = (times_up = false) => {
     // If top player has won
     if (get_top_margin() >= screen_height || (times_up && (get_top_margin() >= get_bottom_margin()) )) {
-        end_game(player_outcome = "L");
+        player_outcome = "L";
+        end_game();
     }
     
     // If bottom player has won
     if (((get_top_margin() == 0 && (top_player_clicks || bottom_player_counts))) || (times_up && (get_top_margin() < get_bottom_margin()) )) {
-        end_game(player_outcome = "W");
+        player_outcome = "W";
+        end_game();
     }
 
     return 0;
