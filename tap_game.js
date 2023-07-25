@@ -133,7 +133,7 @@ const end_game = (player_outcome = "W") => {
     // Update button
     const button = document.getElementById("button");
     button.innerHTML = "Next Game";
-    button.onclick = window.parent.postMessage(player_outcome, "*");
+    button.onclick = function() {window.parent.postMessage(player_outcome, "*");}
     console.log(player_outcome);
 
     // Make game menu visible
