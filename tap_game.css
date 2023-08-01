@@ -113,6 +113,30 @@ body {
     box-shadow: 2px 2px black;
 }
 
+.center {
+    visibility: hidden;
+    margin: 0;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.center button {
+    padding: 0.5em;
+    margin: 3em 0.5em 0 0.5em;
+    font-weight: 600;
+    font-size: 0.8em;
+    background-color: white;
+    border: 2px black solid;
+    box-shadow: 4px 4px black;
+}
+
+.center button:hover {
+    box-shadow: 2px 2px black;
+}
+
 .top50 {
     top: 50%;
 }

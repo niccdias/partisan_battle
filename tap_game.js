@@ -29,6 +29,7 @@ let bottom_player_color = "red";
 let top_player = document.querySelector(".topPlayer");
 let bottom_player = document.querySelector(".bottomPlayer");
 let layer_container = document.querySelector(".layers");
+let play_button_container = document.querySelector(".center");
 
 // Set-up game mechanisms
 /// Menu
@@ -77,6 +78,9 @@ const start_game = () => {
 
     // Hide layers
     toggle_layer_visibility(visible = false);
+
+    // Show play button
+    play_button_container.style.visibility = "visible";
 
     // Set preliminary countdown
     set_timer_spans("3");
@@ -131,8 +135,11 @@ const end_game = () => {
     // Terminate countdown
     clearInterval(countdown_interval);
 
+    // Hide play button
+    play_button_container.style.visibility = "hidden";
+
     // Update button
-    const button = document.getElementById("button");
+    const button = document.getElementById("start_button");
     button.innerHTML = "Next Game";
 
     // Make game menu visible
@@ -145,8 +152,8 @@ const end_game = () => {
     return 0;
 }
 
-/// Button
-const button_pressed = () => {
+/// Start button
+const start_button_pressed = () => {
     if(!game_began) {
         start_game()
     } else{
@@ -188,17 +195,14 @@ const check_for_winner = (times_up = false) => {
     return 0;
 };
 
-// Start listening for clicks
-bottom_player.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
+// Listening for clicks
+const play_button_pressed = () => {
     if (game_began) {
         bottom_player_clicks++;
         set_top_player_score(-click_increment);
         check_for_winner();
     }
-});
+};
 
 // Grab query strings
 const params = new Proxy(new URLSearchParams(window.location.search), {
