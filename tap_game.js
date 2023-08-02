@@ -24,6 +24,7 @@ let top_player_clicks = 0;
 let bottom_player_clicks = 0;
 
 let top_player_pid = "Democrat";
+let bottom_player_pid = "Republican";
 let top_player_color = "skyblue";
 let bottom_player_color = "red";
 let top_player = document.querySelector(".topPlayer");
@@ -38,7 +39,7 @@ const game_menu = (visible = true) => {
     if (get_top_margin() >= get_bottom_margin()) {
         set_menu_heading(`${top_player_pid}s Won!`, top_player_color)
     } else {
-        set_menu_heading(`${params.player_pid}s Won!`, bottom_player_color)
+        set_menu_heading(`${bottom_player_pid}s Won!`, bottom_player_color)
     }
 
     set_menu_subheading(`You tapped the screen ${bottom_player_clicks} times.`)
@@ -210,6 +211,8 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 
 // Update game appearence
+
+
 if (params.player_pid == "Democrat") {
     // Update color variables
     top_player_color = "red";
@@ -217,8 +220,9 @@ if (params.player_pid == "Democrat") {
     top_player.style.backgroundColor = top_player_color;
     bottom_player.style.backgroundColor = bottom_player_color;
 
-    // Update top player's PID
+    // Update top and bottom players' PID
     top_player_pid = "Republican";
+    bottom_player_pid = "Democrat";
 }
 
 // Update difficulty
