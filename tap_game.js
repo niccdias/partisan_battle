@@ -68,12 +68,15 @@ const toggle_layer_visibility = (visible = true) => {
 }
 
 /// Setting timer spans
-const set_timer_spans = (value) => {
-    const timer_spans = document.querySelectorAll("#timer");
+const change_timer_text = (value, size = "3em") => {
+    const timer_spans = document.querySelector("#timer");
+    timer_spans.innerHTML = value;
+    timer_spans.style.fontSize = size;
+}
 
-    timer_spans.forEach(element => {
-        element.innerHTML = value;
-    });
+const change_timer_background = (value) => {
+    const timer_container = document.querySelector(".timer-container");
+    timer_container.style.backgroundColor = value;
 }
 
 /// Starting the game
@@ -100,20 +103,24 @@ const start_game = () => {
         // Rev up
         if (!game_began) {
             if (time_left == 2) {
-                set_timer_spans("Ready...");
+                change_timer_text("Ready...");
             } else if (time_left == 1) {
-                set_timer_spans("Set...");
+                change_timer_text("Set...");
             } else if (time_left <= 0) {
-                set_timer_spans("TAP!👇");
+                change_timer_text("TAP!👇");
                 game_began = true;
                 time_left = 15;
             }
         } else {
             if (time_left <= 0) {
-                set_timer_spans("");
+                change_timer_background("transparent");
+                change_timer_text("");
                 check_for_winner(times_up = true);
+            } else if (time_left <= 5) {
+                change_timer_background("black");
+                change_timer_text(time_left, size = "4em");
             } else {
-                set_timer_spans(time_left);
+                change_timer_text(time_left);
             }
         }
 
