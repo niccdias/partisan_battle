@@ -10,24 +10,17 @@
   <body>
 
     <!-- TIMERS -->
-    <div class="timer-container top50">
-      <div class="timer ">
-        <span id="timer">Hello, Dev!</span>
-      </div>
-    </div>
-    <div class="timer-container bottom50 rotate180">
-      <div class="timer ">
-        <span id="timer">How are you?</span>
-      </div>
+    <div class="timer ">
+      <span id="timer"></span>
     </div>
     
     <!-- MENU -->
     <div class="menu-container">
       <div class="menu">
-        <h1 id="heading" class="">Partisan Battle</h2>
-          <span id="subHeading">Tap faster to win!</span>
+        <h1 id="heading" class="">PARTISAN BATTLE</h2>
+          <span id="subHeading">Tap fast and win money for your party!</span>
           <div class="menu-controls">
-            <button id="start_button" onclick="start_button_pressed()">Ready?</button>
+            <button id="start_button" onclick="start_button_pressed()">Start Game</button>
           </div>
         </div>
     </div>
@@ -43,8 +36,9 @@
     </div>
     <div class="topPlayer"></div>
     <div class="bottomPlayer"></div>
-    <div class="center">
-      <button id="play-button" onclick="play_button_pressed()">Click Here</button>
+    <div class="logos">
+      <img src="dem_logo.png" id="top-logo"/>
+      <button onclick="play_button_pressed()"><img src="rep_logo.png" id="bottom-logo"/></button>
     </div>
   </body>
   

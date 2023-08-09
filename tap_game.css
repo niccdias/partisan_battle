@@ -13,14 +13,14 @@ body {
 
 .bottomPlayer {
     height: 100vh;
-    background-color: red;
+    background-color: #e9141e;
 }
 
 .topPlayer {
     position: absolute;
     height: 50%;
     width: 100%;
-    background-color: skyblue;
+    background-color: #0143ca;
 }
 
 /* listening layers */
@@ -113,58 +113,66 @@ body {
     box-shadow: 2px 2px black;
 }
 
-.center {
+.menu-controls button:active {
+    background-color: grey;
+}
+
+.logos {
     visibility: hidden;
-    margin: 0;
+}
+
+.logos img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+#top-logo {
     position: absolute;
-    top: 75%;
+    top: 15%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
-.center button {
-    padding: 0.5em;
-    margin: 3em 0.5em 0 0.5em;
-    font-weight: 600;
-    font-size: 0.8em;
-    background-color: white;
-    border: 2px black solid;
-    box-shadow: 4px 4px black;
+.logos button {
+    background: transparent;
+    border: none;
+    color: transparent;
+    margin: 0;
+    border: 0;
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
-.center button:hover {
-    box-shadow: 2px 2px black;
+#bottom-logo:hover {
+    box-shadow: 0 0 0 2px black;
 }
 
-.top50 {
-    top: 50%;
-}
-
-.bottom50 {
-    bottom: 50%;
-    color: black;
+#bottom-logo:active {
+    filter: brightness(50%);
 }
 
 .timer-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    position: absolute;
-    z-index: 100;
-    margin: auto;
+
 }
 
 .timer {
     text-align: center;
-    background-color: black;
-    padding: 0 8px 0 8px;
-
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin: auto;
 }
 
 .timer span {
     color: white;
-    font-size: 2em;
+    font-size: 3em;
 }
 
 #heading {

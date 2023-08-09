@@ -15,7 +15,7 @@ let player_outcome = "W";
 
 let reaction_interval;
 let margin = 0;
-let shallowness = 2;
+let shallowness = 1;
 var tap_prob;
 
 let top_player_score;
@@ -25,24 +25,26 @@ let bottom_player_clicks = 0;
 
 let top_player_pid = "Democrat";
 let bottom_player_pid = "Republican";
-let top_player_color = "skyblue";
-let bottom_player_color = "red";
+let top_player_color = "#0143ca";
+let bottom_player_color = "#e9141e";
 let top_player = document.querySelector(".topPlayer");
 let bottom_player = document.querySelector(".bottomPlayer");
 let layer_container = document.querySelector(".layers");
-let play_button_container = document.querySelector(".center");
+let logo_container = document.querySelector(".logos");
+let top_logo = document.getElementById("top-logo");
+let bottom_logo = document.getElementById("bottom-logo");
 
 // Set-up game mechanisms
 /// Menu
 const game_menu = (visible = true) => {
     // Display outcome
     if (get_top_margin() >= get_bottom_margin()) {
-        set_menu_heading(`${top_player_pid}s Won!`, top_player_color)
+        set_menu_heading(`YOU LOSE!`, top_player_color)
+        set_menu_subheading(`The ${top_player_pid}s win 25¢!`)
     } else {
-        set_menu_heading(`${bottom_player_pid}s Won!`, bottom_player_color)
+        set_menu_heading(`YOU WIN!`, bottom_player_color)
+        set_menu_subheading(`The ${bottom_player_pid}s win 25¢!`)
     }
-
-    set_menu_subheading(`You tapped the screen ${bottom_player_clicks} times.`)
 
     // Toggle menu's visibility
     const menu = document.querySelector(".menu-container");
@@ -81,10 +83,9 @@ const start_game = () => {
     toggle_layer_visibility(visible = false);
 
     // Show play button
-    play_button_container.style.visibility = "visible";
+    logo_container.style.visibility = "visible";
 
     // Set preliminary countdown
-    set_timer_spans("3");
     let time_left = 3;
 
     // Hide game menu
@@ -92,20 +93,28 @@ const start_game = () => {
 
     // Initiate countdown
     countdown_interval = setInterval(() => {
-        
-        if(--time_left == 0){
-            if(!game_began) {
-                set_timer_spans("Tap 👆");
+
+        // Increment countdown
+        --time_left;
+
+        // Rev up
+        if (!game_began) {
+            if (time_left == 2) {
+                set_timer_spans("Ready...");
+            } else if (time_left == 1) {
+                set_timer_spans("Set...");
+            } else if (time_left <= 0) {
+                set_timer_spans("TAP!👇");
                 game_began = true;
                 time_left = 15;
             }
-            else {
+        } else {
+            if (time_left <= 0) {
                 set_timer_spans(0);
                 check_for_winner(times_up = true);
+            } else {
+                set_timer_spans(time_left);
             }
-        }
-        else {
-            set_timer_spans(time_left);
         }
 
     }, 1000)
@@ -128,7 +137,7 @@ const start_game = () => {
                 clearInterval(reaction_interval); 
             }
         }
-    }, 100)
+    }, 50)
 }
 
 /// Ending the game
@@ -137,7 +146,7 @@ const end_game = () => {
     clearInterval(countdown_interval);
 
     // Hide play button
-    play_button_container.style.visibility = "hidden";
+    logo_container.style.visibility = "hidden";
 
     // Update button
     const button = document.getElementById("start_button");
@@ -211,14 +220,16 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 
 // Update game appearence
-
-
 if (params.player_pid == "Democrat") {
     // Update color variables
-    top_player_color = "red";
-    bottom_player_color = "skyblue";
+    top_player_color = "#e9141e";
+    bottom_player_color = "#0143ca";
     top_player.style.backgroundColor = top_player_color;
     bottom_player.style.backgroundColor = bottom_player_color;
+
+    // Update logos
+    top_logo.src = "rep_logo.png";
+    bottom_player.src = "dem_logo.png";
 
     // Update top and bottom players' PID
     top_player_pid = "Republican";
