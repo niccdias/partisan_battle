@@ -271,12 +271,12 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 
 // Update totals
 if(params.out_party_total) {
-    out_party_total = params.out_party_total;
+    out_party_total = parseFloat(params.out_party_total);
     top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
 }
 
 if(params.in_party_total) {
-    in_party_total = params.in_party_total;
+    in_party_total = parseFloat(params.in_party_total);
     bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
 }
 
