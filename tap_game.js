@@ -15,7 +15,7 @@ let player_outcome = "W";
 
 let reaction_interval;
 let margin = 0;
-let shallowness = 1;
+let shallowness = 1.5;
 var tap_prob;
 
 let top_player_score;
@@ -110,7 +110,7 @@ const start_game = () => {
             }
         } else {
             if (time_left <= 0) {
-                set_timer_spans(0);
+                set_timer_spans("");
                 check_for_winner(times_up = true);
             } else {
                 set_timer_spans(time_left);
