@@ -107,7 +107,7 @@ const toggle_layer_visibility = (visible = true) => {
 }
 
 /// Setting timer spans
-const change_timer_text = (value, size = "3vw") => {
+const change_timer_text = (value, size = "6vh") => {
     const timer_spans = document.querySelector("#timer");
     timer_spans.innerHTML = value;
     timer_spans.style.fontSize = size;
@@ -157,7 +157,7 @@ const start_game = () => {
                 check_for_winner(times_up = true);
             } else if (time_left <= 5) {
                 change_timer_background("black");
-                change_timer_text(time_left, size = "4vw");
+                change_timer_text(time_left, size = "8vh");
             } else {
                 change_timer_text(time_left);
             }
