@@ -137,7 +137,7 @@ const start_game = () => {
                 clearInterval(reaction_interval); 
             }
         }
-    }, 50)
+    }, 100)
 }
 
 /// Ending the game
@@ -229,7 +229,7 @@ if (params.player_pid == "Democrat") {
 
     // Update logos
     top_logo.src = "rep_logo.png";
-    bottom_player.src = "dem_logo.png";
+    bottom_logo.src = "dem_logo.png";
 
     // Update top and bottom players' PID
     top_player_pid = "Republican";
