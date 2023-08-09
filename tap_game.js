@@ -7,6 +7,26 @@ function sigmoid(input = 0, shape = 2) {
   return 1 / (1 + Math.exp(-input / shape));
 }
 
+// Define shuffle function
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 // Set variables
 let click_increment = screen_height * 0.03;
 let game_began = false;
@@ -34,16 +54,35 @@ let logo_container = document.querySelector(".logos");
 let top_logo = document.getElementById("top-logo");
 let bottom_logo = document.getElementById("bottom-logo");
 
+let top_player_total = document.getElementById("topPlayerTotal");
+let bottom_player_total = document.getElementById("bottomPlayerTotal");
+let in_party_total = 0
+let out_party_total = 0
+
+let losing_messages = shuffle([
+    `Sad. The ${top_player_pid}s won this battle of reflexes! Try tapping faster.`,
+    `You tapped fast-ish... but not fast enough. The ${top_player_pid}s were faster!`,
+    `Are you tapped out? Tap faster if you want to beat the ${top_player_pid}s!`,
+    `Are you letting the ${top_player_pid}s win? Tap faster!`
+]);
+
+let winning_messages = shuffle([
+    `Nice job! The ${bottom_player_pid}s won this battle of reflexes!`,
+    `Wow, that's impressive. The ${top_player_pid}s will have to tap faster to catch up!`,
+    `You've really tapped into your potential! The ${bottom_player_pid}s are FAST!`,
+    `You stuck it to the ${top_player_pid}s! Way to go!`
+]);
+
 // Set-up game mechanisms
 /// Menu
 const game_menu = (visible = true) => {
     // Display outcome
     if (get_top_margin() >= get_bottom_margin()) {
-        set_menu_heading(`YOU LOSE!`, top_player_color)
-        set_menu_subheading(`The ${top_player_pid}s win 25¢!`)
+        set_menu_heading(`${top_player_pid}s WIN!`, top_player_color)
+        set_menu_subheading(losing_messages[1])
     } else {
-        set_menu_heading(`YOU WIN!`, bottom_player_color)
-        set_menu_subheading(`The ${bottom_player_pid}s win 25¢!`)
+        set_menu_heading(`${bottom_player_pid}s WIN!`, bottom_player_color)
+        set_menu_subheading(winning_messages[1])
     }
 
     // Toggle menu's visibility
@@ -200,12 +239,16 @@ const check_for_winner = (times_up = false) => {
     // If top player has won
     if (get_top_margin() >= screen_height || (times_up && (get_top_margin() >= get_bottom_margin()) )) {
         player_outcome = "L";
+        out_party_total = out_party_total + 0.25;
+        top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
         end_game();
     }
     
     // If bottom player has won
     if (((get_top_margin() == 0 && (top_player_clicks || bottom_player_counts))) || (times_up && (get_top_margin() < get_bottom_margin()) )) {
         player_outcome = "W";
+        in_party_total = in_party_total + 0.25;
+        bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
         end_game();
     }
 
@@ -225,6 +268,17 @@ const play_button_pressed = () => {
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
+
+// Update totals
+if(params.out_party_total) {
+    out_party_total = params.out_party_total;
+    top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
+}
+
+if(params.in_party_total) {
+    in_party_total = params.in_party_total;
+    bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
+}
 
 // Update game appearence
 if (params.player_pid == "Democrat") {
