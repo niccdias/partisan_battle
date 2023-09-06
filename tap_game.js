@@ -214,7 +214,7 @@ const start_button_pressed = () => {
         start_game();
     } else{
         console.log(player_outcome);
-        window.parent.postMessage(player_outcome.toString(), '*');
+        window.parent.postMessage(player_outcome, '*');
     }
 
     return 0;
