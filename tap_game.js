@@ -213,8 +213,7 @@ const start_button_pressed = () => {
     if(!game_began) {
         start_game();
     } else{
-        console.log(player_outcome);
-        window.parent.postMessage(player_outcome, '*');
+        window.parent.postMessage(String(player_outcome), '*');
     }
 
     return 0;
