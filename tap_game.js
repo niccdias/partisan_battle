@@ -238,7 +238,7 @@ const set_top_player_score = (click_increment) => {
 const check_for_winner = (times_up = false) => {
     // If top player has won
     if (get_top_margin() >= screen_height || (times_up && (get_top_margin() >= get_bottom_margin()) )) {
-        player_outcome = "L";
+        player_outcome = "L" + bottom_player_clicks.toString();
         out_party_total = out_party_total + 0.25;
         top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
         end_game();
@@ -246,7 +246,7 @@ const check_for_winner = (times_up = false) => {
     
     // If bottom player has won
     if (((get_top_margin() == 0 && (top_player_clicks || bottom_player_counts))) || (times_up && (get_top_margin() < get_bottom_margin()) )) {
-        player_outcome = "W";
+        player_outcome = "W" + bottom_player_clicks.toString();
         in_party_total = in_party_total + 0.25;
         bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
         end_game();
@@ -280,7 +280,7 @@ if(params.in_party_total) {
     bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
 }
 
-// Update game appearence
+// Update game apperence
 if (params.player_pid == "Democrat") {
     // Update color variables
     top_player_color = "#e9141e";
