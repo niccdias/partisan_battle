@@ -60,17 +60,17 @@ let in_party_total = 0
 let out_party_total = 0
 
 let losing_messages = shuffle([
-    `Sad. The ${top_player_pid}s won this battle of reflexes! Try tapping faster.`,
-    `You tapped fast-ish... but not fast enough. The ${top_player_pid}s were faster!`,
-    `Are you tapped out? Tap faster if you want to beat the ${top_player_pid}s!`,
-    `Are you letting the ${top_player_pid}s win? Tap faster!`
+    `Sad. 😔 Try tapping faster!`,
+    `Did you even try? That was bad. 😬`,
+    `Are you tapped out? 🤨 It's like you're not trying.`,
+    `Oof. 😂 Don't quit your day job.`
 ]);
 
 let winning_messages = shuffle([
-    `Nice job! The ${bottom_player_pid}s won this battle of reflexes!`,
-    `Wow, that's impressive. The ${top_player_pid}s will have to tap faster to catch up!`,
-    `You've really tapped into your potential! The ${bottom_player_pid}s are FAST!`,
-    `You stuck it to the ${top_player_pid}s! Way to go!`
+    `Nice job, champion! 🏆`,
+    `Impressive. That was fast. 😅`,
+    `You've tapped into your potential! 😲`,
+    `You got 'em good!`
 ]);
 
 // Set-up game mechanisms
