@@ -181,6 +181,7 @@ const start_game = () => {
 
             if (time_left == 0) {
                 clearInterval(reaction_interval); 
+                check_for_winner();
             }
         }
     }, 100)
