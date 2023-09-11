@@ -178,19 +178,15 @@ const start_game = () => {
                 set_top_player_score(click_increment);
                 check_for_winner();
             }
-
-            if (time_left == 0) {
-                check_for_winner();
-                clearInterval(reaction_interval); 
-            }
         }
     }, 100)
 }
 
 /// Ending the game
 const end_game = () => {
-    // Terminate countdown
+    // Terminate countdown and computer
     clearInterval(countdown_interval);
+    clearInterval(reaction_interval); 
 
     // Hide play button
     logo_container.style.visibility = "hidden";
@@ -204,7 +200,7 @@ const end_game = () => {
     toggle_layer_visibility(visible = true);
 
     // Reset margins
-    // top_player.style.height = "50%"
+    top_player.style.height = "50%"
 
     return 0;
 }
