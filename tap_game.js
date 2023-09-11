@@ -187,7 +187,6 @@ const start_game = () => {
             if ((time_left > 0) && (Math.random() < tap_prob)) {
                 top_player_clicks++;
                 set_top_player_score(click_increment);
-                check_for_winner();
             }
         }
     }, 100)
@@ -246,10 +245,9 @@ const check_for_winner = (times_up = false) => {
         out_party_total = out_party_total + 0.25;
         top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
         end_game();
-    }
-    
+
     // If bottom player has won
-    if (times_up && (get_top_margin() < get_bottom_margin())) {
+    } else if (times_up && (get_top_margin() < get_bottom_margin())) {
         player_outcome = "WIN" + String(bottom_player_clicks);
         in_party_total = in_party_total + 0.25;
         bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
@@ -264,7 +262,6 @@ const play_button_pressed = () => {
     if (game_began) {
         bottom_player_clicks++;
         set_top_player_score(-click_increment);
-        check_for_winner();
     }
 };
 
