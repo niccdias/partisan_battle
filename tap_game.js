@@ -77,7 +77,7 @@ let winning_messages = shuffle([
 /// Menu
 const game_menu = (visible = true) => {
     // Display outcome
-    if (get_top_margin() >= get_bottom_margin()) {
+    if (player_outcome.includes("LOSE")) {
         set_menu_heading(`${top_player_pid}s WIN!`, top_player_color)
         set_menu_subheading(losing_messages[1])
     } else {
