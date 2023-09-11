@@ -204,7 +204,7 @@ const end_game = () => {
     toggle_layer_visibility(visible = true);
 
     // Reset margins
-    top_player.style.height = "50%"
+    // top_player.style.height = "50%"
 
     return 0;
 }
