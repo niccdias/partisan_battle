@@ -152,12 +152,23 @@ const start_game = () => {
             }
         } else {
             if (time_left == 0) {
+                // Hide background
                 change_timer_background("transparent");
+
+                // Hide timer
                 change_timer_text("");
+
+                // Terminate countdown and computer
+                clearInterval(countdown_interval);
+                clearInterval(reaction_interval); 
+
+                // Check for winner
                 check_for_winner(times_up = true);
+
             } else if (time_left <= 5) {
                 change_timer_background("black");
                 change_timer_text(time_left, size = "7vh");
+                
             } else {
                 change_timer_text(time_left);
             }
@@ -184,10 +195,6 @@ const start_game = () => {
 
 /// Ending the game
 const end_game = () => {
-    // Terminate countdown and computer
-    clearInterval(countdown_interval);
-    clearInterval(reaction_interval); 
-
     // Hide play button
     logo_container.style.visibility = "hidden";
 
