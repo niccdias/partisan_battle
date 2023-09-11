@@ -151,7 +151,7 @@ const start_game = () => {
                 time_left = 15;
             }
         } else {
-            if (time_left <= 0) {
+            if (time_left == 0) {
                 change_timer_background("transparent");
                 change_timer_text("");
                 check_for_winner(times_up = true);
