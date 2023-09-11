@@ -180,8 +180,8 @@ const start_game = () => {
             }
 
             if (time_left == 0) {
-                clearInterval(reaction_interval); 
                 check_for_winner();
+                clearInterval(reaction_interval); 
             }
         }
     }, 100)
