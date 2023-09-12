@@ -148,6 +148,7 @@ const start_game = () => {
             } else if (time_left <= 0) {
                 change_timer_text("TAP!👇");
                 game_began = true;
+                console.log(game_began);
                 time_left = 15;
             }
         } else {
@@ -163,7 +164,7 @@ const start_game = () => {
                 clearInterval(reaction_interval); 
 
                 // Check for winner
-                check_for_winner(times_up = true);
+                check_for_winner();
 
             } else if (time_left <= 5) {
                 change_timer_background("black");
@@ -238,16 +239,16 @@ const set_top_player_score = (click_increment) => {
         : "0px";
 };
 
-const check_for_winner = (times_up = false) => {
+const check_for_winner = () => {
     // If top player has won
-    if (times_up && (get_top_margin() >= get_bottom_margin())) {
+    if (get_top_margin() >= get_bottom_margin()) {
         player_outcome = "LOSE" + String(bottom_player_clicks);
         out_party_total = out_party_total + 0.25;
         top_player_total.innerHTML = "$" + out_party_total.toFixed(2);
         end_game();
 
     // If bottom player has won
-    } else if (times_up && (get_top_margin() < get_bottom_margin())) {
+    } else {
         player_outcome = "WIN" + String(bottom_player_clicks);
         in_party_total = in_party_total + 0.25;
         bottom_player_total.innerHTML = "$" + in_party_total.toFixed(2);
